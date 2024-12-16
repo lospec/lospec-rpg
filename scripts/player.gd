@@ -4,7 +4,7 @@ extends Node2D
 
 
 func _process(_delta):
-	print(character)
+	#print(character)
 	var player_input = Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
 		Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
