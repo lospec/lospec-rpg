@@ -59,17 +59,20 @@ animations = [{
 radius = 7.0
 
 [node name="Character" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_mask = 3
+motion_mode = 1
 script = ExtResource("1_ntm52")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_nil7t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_e5wf8")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.987338
+frame_progress = 0.95995
+offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)

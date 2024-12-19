@@ -1,7 +1,9 @@
 extends Node2D
 
-@onready var character = get_parent()
+@onready var character : Character = get_parent()
 
+func _ready() -> void:
+	character.state = Character.State.MOVE
 
 func _process(_delta):
 	#print(character)

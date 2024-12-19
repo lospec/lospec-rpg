@@ -19,10 +19,15 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=240
 window/size/viewport_height=160
-window/size/window_width_override=480
-window/size/window_height_override=320
+window/size/window_width_override=960
+window/size/window_height_override=640
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
+
+[layer_names]
+
+2d_physics/layer_1="Character"
+2d_physics/layer_2="Terrain"
 
 [rendering]
 
