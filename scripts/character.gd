@@ -3,7 +3,7 @@ class_name Character extends CharacterBody2D
 
 
 @export var character_name : String
-@export var sprite_sheet:CompressedTexture2D
+@export var sprite_sheet : CompressedTexture2D
 @export var state = State.IDLE
 
 const SPEED = 200.0
@@ -18,9 +18,10 @@ var input: Vector2 = Vector2.ZERO
 
 func _ready():
 	if (sprite_sheet):
-		var update_texture = load("update-texture.gd").new()
+		var update_texture = load("res://scripts/update-texture.gd").new()
 		update_texture.update_texture(sprite, sprite_sheet)
 	sprite.play("idle")
+	
 
 
 func _physics_process(delta: float) -> void:

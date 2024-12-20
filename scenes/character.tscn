@@ -66,6 +66,7 @@ script = ExtResource("1_ntm52")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_nil7t")
+offset = Vector2(1, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e5wf8")
