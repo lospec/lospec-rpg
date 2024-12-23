@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="CharacterAP" load_steps=5 format=3 uid="uid://dlddn7gpxeu45"]
 
-[ext_resource type="Script" path="res://scripts/ActionPriorities/ActionPriority.gd" id="1_baj8k"]
+[ext_resource type="Script" path="res://scripts/battle_system/ai/ActionPriority.gd" id="1_baj8k"]
 [ext_resource type="Resource" uid="uid://bl60g5le4rvd2" path="res://resource/CharacterSheet/smiley.tres" id="1_u3gj1"]
-[ext_resource type="Script" path="res://scripts/ActionPriorities/CharacterAP.gd" id="1_yyb5u"]
+[ext_resource type="Script" path="res://scripts/battle_system/ai/CharacterAP.gd" id="1_yyb5u"]
 
 [sub_resource type="Resource" id="Resource_cwik1"]
 script = ExtResource("1_baj8k")
@@ -10,5 +10,5 @@ script = ExtResource("1_baj8k")
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_yyb5u")
-character_sheet = ExtResource("1_u3gj1")
+char_sheet = ExtResource("1_u3gj1")
 action_priorities = Array[ExtResource("1_baj8k")]([SubResource("Resource_cwik1")])

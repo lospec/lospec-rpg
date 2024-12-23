@@ -4,4 +4,4 @@ extends Area2D
 
 func _on_body_entered(_body: Node2D) -> void:
 	$CollisionShape2D.set_deferred("disabled", true)
-	Globals.battle_manager.Fight(enemies)
+	Globals.battle_manager.fight(enemies)

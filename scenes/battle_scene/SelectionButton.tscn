@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyb6e2suauyus"]
+
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="1_q3lon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wru6x"]
+bg_color = Color(0.74902, 0.74902, 0.72549, 1)
+
+[node name="SelectionButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 66.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.270588, 0.266667, 0.313726, 1)
+theme_override_fonts/font = ExtResource("1_q3lon")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wru6x")
+text = "asd"

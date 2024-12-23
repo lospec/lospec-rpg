@@ -1,0 +1,210 @@
+[gd_scene load_steps=18 format=3 uid="uid://c8ts3jtnd8gu4"]
+
+[ext_resource type="Script" path="res://scripts/battle_system/unit.gd" id="1_yk6bw"]
+[ext_resource type="Texture2D" uid="uid://cetex474njydu" path="res://art/shadow.png" id="2_1bhlx"]
+[ext_resource type="Shader" path="res://material/Outline.gdshader" id="3_0pewf"]
+[ext_resource type="Texture2D" uid="uid://dxllgjcrdt3e6" path="res://characters/skeddles/smiley.png" id="4_u206w"]
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="5_0wjj2"]
+[ext_resource type="Texture2D" uid="uid://c81c6mcak0iba" path="res://art/rip_v1.png" id="6_gv886"]
+[ext_resource type="Texture2D" uid="uid://c4qk80jxsktq2" path="res://art/select_that.png" id="7_ec8eb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1n71t"]
+resource_local_to_scene = true
+shader = ExtResource("3_0pewf")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/enable = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7r31d"]
+bg_color = Color(0.133333, 0.129412, 0.180392, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxfjq"]
+bg_color = Color(0.745098, 0, 0, 1)
+corner_detail = 1
+
+[sub_resource type="Animation" id="Animation_lkb1e"]
+resource_name = "Idle"
+length = 0.40002
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1axfy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fy478"]
+_data = {
+"Idle": SubResource("Animation_lkb1e"),
+"RESET": SubResource("Animation_1axfy")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfqqc"]
+size = Vector2(18, 18)
+
+[sub_resource type="Animation" id="Animation_k4ryr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -45)]
+}
+
+[sub_resource type="Animation" id="Animation_4n6ey"]
+resource_name = "Show"
+length = 1.00002
+loop_mode = 1
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -43), Vector2(0, -44)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hrid5"]
+_data = {
+"RESET": SubResource("Animation_k4ryr"),
+"Show": SubResource("Animation_4n6ey")
+}
+
+[node name="Unit" type="Node2D"]
+script = ExtResource("1_yk6bw")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture = ExtResource("2_1bhlx")
+
+[node name="CharacterSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_1n71t")
+texture = ExtResource("4_u206w")
+offset = Vector2(0, -16)
+hframes = 2
+vframes = 2
+
+[node name="Control" type="Control" parent="CharacterSprite"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -32.0
+offset_right = -16.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HPBar" type="ProgressBar" parent="CharacterSprite/Control"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(21, 4)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -10.5
+offset_right = 10.5
+offset_bottom = 4.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_0wjj2")
+theme_override_font_sizes/font_size = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_7r31d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jxfjq")
+value = 50.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="CharacterSprite/Control/HPBar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_0wjj2")
+theme_override_font_sizes/font_size = 4
+text = "3/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tombstone" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("6_gv886")
+offset = Vector2(0, -8)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fy478")
+}
+autoplay = "Idle"
+
+[node name="SelectionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="SelectionCollision" type="CollisionShape2D" parent="SelectionArea"]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_nfqqc")
+
+[node name="SelectUI" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 2
+position = Vector2(0, -45)
+texture = ExtResource("7_ec8eb")
+
+[node name="SelectAnimation" type="AnimationPlayer" parent="SelectUI"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_hrid5")
+}
+autoplay = "RESET"
+
+[connection signal="input_event" from="SelectionArea" to="." method="_on_selection_area_input_event"]
+[connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
+[connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]

@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://docc6xin1bqou"]
+[gd_scene load_steps=10 format=3 uid="uid://docc6xin1bqou"]
 
-[ext_resource type="Script" path="res://scripts/BattleSystem/battle_manager.gd" id="1_nusr3"]
-[ext_resource type="Texture2D" uid="uid://db0nefci05mgl" path="res://art/image (1).png" id="1_qagmp"]
-[ext_resource type="PackedScene" uid="uid://c8ts3jtnd8gu4" path="res://scenes/unit.tscn" id="3_2khoy"]
-[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="4_epudw"]
+[ext_resource type="Script" path="res://scripts/battle_system/battle_manager.gd" id="1_626np"]
+[ext_resource type="Texture2D" uid="uid://db0nefci05mgl" path="res://art/image (1).png" id="2_4xsu6"]
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="3_ur4j6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bi14n"]
 bg_color = Color(0.133333, 0.129412, 0.180392, 1)
@@ -29,10 +28,14 @@ border_width_bottom = 1
 border_color = Color(0.494118, 0.501961, 0.392157, 1)
 corner_detail = 1
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8v1di"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yoxqs"]
+
 [node name="BattleScene" type="CanvasLayer"]
 process_mode = 3
 layer = 2
-script = ExtResource("1_nusr3")
+script = ExtResource("1_626np")
 
 [node name="Environment" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -42,26 +45,19 @@ position = Vector2(1, -16)
 [node name="Background" type="Sprite2D" parent="Environment"]
 unique_name_in_owner = true
 position = Vector2(121, 84)
-texture = ExtResource("1_qagmp")
+texture = ExtResource("2_4xsu6")
 hframes = 3
 vframes = 3
 
-[node name="AllyContainer" type="Node2D" parent="Environment"]
+[node name="AllyContainer" type="Marker2D" parent="Environment"]
 unique_name_in_owner = true
 y_sort_enabled = true
-position = Vector2(50, 110)
+position = Vector2(60, 110)
 
-[node name="Unit" parent="Environment/AllyContainer" instance=ExtResource("3_2khoy")]
-position = Vector2(-15, 3)
-
-[node name="Unit2" parent="Environment/AllyContainer" instance=ExtResource("3_2khoy")]
-
-[node name="EnemyContainer" type="Node2D" parent="Environment"]
+[node name="EnemyContainer" type="Marker2D" parent="Environment"]
 unique_name_in_owner = true
 y_sort_enabled = true
-position = Vector2(210, 110)
-
-[node name="Unit" parent="Environment/EnemyContainer" instance=ExtResource("3_2khoy")]
+position = Vector2(180, 110)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -70,6 +66,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="UI"]
 layout_mode = 1
@@ -94,11 +91,12 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="TextContainer" type="Control" parent="UI/Panel/MarginContainer"]
+[node name="TextPrompt" type="Control" parent="UI/Panel/MarginContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="UI/Panel/MarginContainer/TextContainer"]
+[node name="Text" type="RichTextLabel" parent="UI/Panel/MarginContainer/TextPrompt"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -107,14 +105,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/line_separation = 1
-theme_override_fonts/normal_font = ExtResource("4_epudw")
+theme_override_fonts/normal_font = ExtResource("3_ur4j6")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
 text = "You tried to run!"
 scroll_active = false
 scroll_following = true
 
-[node name="Next" type="RichTextLabel" parent="UI/Panel/MarginContainer/TextContainer"]
+[node name="Next" type="Label" parent="UI/Panel/MarginContainer/TextPrompt"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
@@ -128,15 +126,17 @@ offset_right = 4.0
 offset_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_fonts/normal_font = ExtResource("4_epudw")
-theme_override_font_sizes/normal_font_size = 8
-bbcode_enabled = true
-text = "[pulse freq=1.0 color=#ffffff00 ease=-2.0]>"
-fit_content = true
-scroll_active = false
+theme_override_fonts/font = ExtResource("3_ur4j6")
+theme_override_font_sizes/font_size = 8
+text = ">"
+
+[node name="BlinkNext" type="Timer" parent="UI/Panel/MarginContainer/TextPrompt/Next"]
+unique_name_in_owner = true
+wait_time = 0.8
 
 [node name="Actions" type="HBoxContainer" parent="UI/Panel/MarginContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 alignment = 1
 
@@ -144,7 +144,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.133333, 0.129412, 0.180392, 1)
-theme_override_fonts/font = ExtResource("4_epudw")
+theme_override_fonts/font = ExtResource("3_ur4j6")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/focus = SubResource("StyleBoxFlat_awppv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08s7k")
@@ -155,7 +155,7 @@ text = "Attack"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.133333, 0.129412, 0.180392, 1)
-theme_override_fonts/font = ExtResource("4_epudw")
+theme_override_fonts/font = ExtResource("3_ur4j6")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/focus = SubResource("StyleBoxFlat_awppv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08s7k")
@@ -166,7 +166,7 @@ text = "Skill"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.133333, 0.129412, 0.180392, 1)
-theme_override_fonts/font = ExtResource("4_epudw")
+theme_override_fonts/font = ExtResource("3_ur4j6")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/focus = SubResource("StyleBoxFlat_awppv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08s7k")
@@ -177,12 +177,54 @@ text = "Item"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.133333, 0.129412, 0.180392, 1)
-theme_override_fonts/font = ExtResource("4_epudw")
+theme_override_fonts/font = ExtResource("3_ur4j6")
 theme_override_font_sizes/font_size = 8
 theme_override_styles/focus = SubResource("StyleBoxFlat_awppv")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08s7k")
 theme_override_styles/normal = SubResource("StyleBoxFlat_5qmqv")
 text = "Run"
+
+[node name="SelectPrompt" type="Control" parent="UI/Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CenterAlign" type="VBoxContainer" parent="UI/Panel/MarginContainer/SelectPrompt"]
+layout_mode = 2
+offset_right = 224.0
+offset_bottom = 28.0
+alignment = 1
+
+[node name="Selection" type="RichTextLabel" parent="UI/Panel/MarginContainer/SelectPrompt/CenterAlign"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/line_separation = 1
+theme_override_fonts/normal_font = ExtResource("3_ur4j6")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[center]*Select a target*"
+fit_content = true
+scroll_active = false
+scroll_following = true
+
+[node name="SelectCancel" type="Button" parent="UI/Panel/MarginContainer/SelectPrompt"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -9.0
+offset_top = -3.0
+offset_right = 6.0
+offset_bottom = 13.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.745098, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("3_ur4j6")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8v1di")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yoxqs")
+text = "X"
+flat = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -10
@@ -194,7 +236,9 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.12549, 0.12549, 0.12549, 1)
 
+[connection signal="timeout" from="UI/Panel/MarginContainer/TextPrompt/Next/BlinkNext" to="." method="_on_blink_next_timeout"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Actions/Attack" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Actions/Skill" to="." method="_on_skill_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Actions/Item" to="." method="_on_item_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Actions/Run" to="." method="_on_run_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/SelectPrompt/SelectCancel" to="." method="_on_select_cancel_pressed"]

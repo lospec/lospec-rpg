@@ -1,6 +1,6 @@
 class_name Character extends CharacterBody2D
 
-
+enum State {IDLE, MOVE}
 
 @export var character_name : String
 @export var sprite_sheet : CompressedTexture2D
@@ -10,7 +10,6 @@ const SPEED = 200.0
 const ACCEL = 10.0
 const FRICTION = 10.0
 
-enum State {IDLE, MOVE}
 
 var input: Vector2 = Vector2.ZERO
 
@@ -23,9 +22,9 @@ func _ready():
 	sprite.play("idle")
 	
 
-
 func _physics_process(delta: float) -> void:
 	if state == State.MOVE: state_move(delta)
+	
 
 func state_move(delta):
 	var angle = rad_to_deg(velocity.angle()) - 90

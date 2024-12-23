@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CharacterSheet" load_steps=4 format=3 uid="uid://dkf51paik6ls2"]
 
-[ext_resource type="Script" path="res://scripts/CharacterSheet/character_sheet.gd" id="1_8xssf"]
-[ext_resource type="Script" path="res://scripts/CharacterSheet/skill.gd" id="2_7imu7"]
+[ext_resource type="Script" path="res://scripts/character_sheet/character_sheet.gd" id="1_8xssf"]
+[ext_resource type="Script" path="res://scripts/character_sheet/skill.gd" id="2_7imu7"]
 [ext_resource type="Texture2D" uid="uid://bxsbc7vc6xsxi" path="res://characters/skeddles/skeddles.png" id="2_pdulk"]
 
 [resource]
@@ -9,9 +9,9 @@ resource_local_to_scene = true
 script = ExtResource("1_8xssf")
 char_name = "Skeddles"
 sprite_sheet = ExtResource("2_pdulk")
-maxHp = 10
+max_hp = 99
+max_mana = 0
 dmg = 1
 def = 0
-mana = 0
 magic = 0
 skill = Array[ExtResource("2_7imu7")]([])
