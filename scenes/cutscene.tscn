@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://catws4q35ihb0"]
+
+[ext_resource type="Script" uid="uid://dumuatg57a5xv" path="res://scripts/cutscene.gd" id="1_vc5vb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkpb1"]
+
+[node name="Cutscene" type="Node2D"]
+script = ExtResource("1_vc5vb")
+
+[node name="CutsceneTrigger" type="Area2D" parent="."]
+modulate = Color(1, 0.682353, 0, 1)
+position = Vector2(280, -82)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CutsceneTrigger"]
+shape = SubResource("RectangleShape2D_wkpb1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(309, -103)

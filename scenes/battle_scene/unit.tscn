@@ -1,0 +1,354 @@
+[gd_scene load_steps=20 format=3 uid="uid://c8ts3jtnd8gu4"]
+
+[ext_resource type="Script" uid="uid://q32f84u8bn5t" path="res://scripts/battle_system/unit.gd" id="1_yk6bw"]
+[ext_resource type="Texture2D" uid="uid://cetex474njydu" path="res://art/shadow.png" id="2_1bhlx"]
+[ext_resource type="Shader" uid="uid://bkr51xjxm0slh" path="res://material/outline_flash.gdshader" id="3_mbawx"]
+[ext_resource type="Texture2D" uid="uid://bxsbc7vc6xsxi" path="res://art/characters/skeddles/skeddles.png" id="4_pjels"]
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="5_0wjj2"]
+[ext_resource type="Texture2D" uid="uid://c81c6mcak0iba" path="res://art/rip_v1.png" id="6_gv886"]
+[ext_resource type="Texture2D" uid="uid://c4qk80jxsktq2" path="res://art/select_that.png" id="7_ec8eb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1n71t"]
+resource_local_to_scene = true
+shader = ExtResource("3_mbawx")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/enable = false
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7r31d"]
+bg_color = Color(0.133333, 0.129412, 0.180392, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxfjq"]
+bg_color = Color(0.745098, 0, 0, 1)
+corner_detail = 1
+
+[sub_resource type="Animation" id="Animation_1axfy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterSprite:material:shader_parameter/flash_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CharacterSprite:material:shader_parameter/flash_value")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_fwrje"]
+resource_name = "cast"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kbjis"]
+resource_name = "fail"
+length = 0.20002
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.31, 0.31, 0.31, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lkb1e"]
+resource_name = "idle"
+length = 0.40002
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mbawx"]
+resource_name = "hurt"
+length = 0.16667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:material:shader_parameter/flash_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterSprite:material:shader_parameter/flash_value")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4bkkf"]
+resource_name = "dead"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fy478"]
+_data = {
+&"RESET": SubResource("Animation_1axfy"),
+&"cast": SubResource("Animation_fwrje"),
+&"dead": SubResource("Animation_4bkkf"),
+&"fail": SubResource("Animation_kbjis"),
+&"hurt": SubResource("Animation_mbawx"),
+&"idle": SubResource("Animation_lkb1e")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nfqqc"]
+size = Vector2(18, 18)
+
+[sub_resource type="GDScript" id="GDScript_qgwdo"]
+script/source = "extends Sprite2D
+
+
+@export var speed: float = 1.0
+@export var amplitude: float = 100.0
+@export var transparent_color : Color
+
+var initial_position: Vector2
+
+func _ready():
+	initial_position = position
+
+
+func _process(delta: float):
+	position.y = initial_position.y + abs(sin(Time.get_ticks_msec() / 1000.0 * speed)) * amplitude
+
+
+func stop() -> void:
+	set_process(false)
+	hide()
+
+
+func transparent() -> void:
+	set_process(false)
+	position = initial_position
+	modulate = transparent_color
+	scale = Vector2.ONE
+	show()
+
+
+func play() -> void:
+	set_process(true)
+	modulate = Color.WHITE
+	scale = Vector2.ONE * 1.1
+	show()
+"
+
+[node name="Unit" type="Node2D"]
+script = ExtResource("1_yk6bw")
+heal_color = Color(0.0352941, 0.560784, 0.14902, 1)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture = ExtResource("2_1bhlx")
+
+[node name="CharacterSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_1n71t")
+texture = ExtResource("4_pjels")
+offset = Vector2(0, -16)
+hframes = 2
+vframes = 2
+
+[node name="Tombstone" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("6_gv886")
+offset = Vector2(0, -8)
+
+[node name="UI" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HPBar" type="ProgressBar" parent="UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(21, 4)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = 5.0
+offset_right = 10.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_0wjj2")
+theme_override_font_sizes/font_size = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_7r31d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jxfjq")
+value = 50.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="UI/HPBar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_0wjj2")
+theme_override_font_sizes/font_size = 4
+text = "3/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fy478")
+}
+autoplay = "idle"
+
+[node name="SelectionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="SelectionCollision" type="CollisionShape2D" parent="SelectionArea"]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_nfqqc")
+
+[node name="SelectUI" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.666667, 0.666667, 0.666667, 0.666667)
+z_index = 2
+position = Vector2(0, -31)
+texture = ExtResource("7_ec8eb")
+script = SubResource("GDScript_qgwdo")
+speed = 2.0
+amplitude = 2.0
+transparent_color = Color(0.666667, 0.666667, 0.666667, 0.666667)
+
+[node name="NumberPopupPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -22)
+
+[connection signal="input_event" from="SelectionArea" to="." method="_on_selection_area_input_event"]
+[connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
+[connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxsbc7vc6xsxi"
-path="res://.godot/imported/skeddles.png-a814d90c741a030df7cd48a4094a5a1c.ctex"
+uid="uid://bsjivat4he72c"
+path="res://.godot/imported/Triangle_8x8.png-baf5ac8afcf2cb00b1ae7c0ef7223a2d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/skeddles/skeddles.png"
-dest_files=["res://.godot/imported/skeddles.png-a814d90c741a030df7cd48a4094a5a1c.ctex"]
+source_file="res://art/shapes/Triangle_8x8.png"
+dest_files=["res://.godot/imported/Triangle_8x8.png-baf5ac8afcf2cb00b1ae7c0ef7223a2d.ctex"]
 
 [params]
 

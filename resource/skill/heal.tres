@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://fkrd6rd301xm"]
+
+[ext_resource type="Script" uid="uid://bhwfphr11mqkm" path="res://scripts/skill/skill_resource.gd" id="1_end2o"]
+
+[resource]
+script = ExtResource("1_end2o")
+name = "Heal"
+atk_type = 1
+mana_cost = 2
+cooldown = 1
+target_group = 1
+target_type = 0
+targetable_self = true
+description = ""

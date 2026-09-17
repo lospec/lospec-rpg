@@ -1,8 +1,42 @@
-[gd_scene load_steps=2 format=3 uid="uid://dik8pqs6immb7"]
+[gd_scene load_steps=10 format=3 uid="uid://dik8pqs6immb7"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_1kok8"]
+[ext_resource type="Script" uid="uid://d1u4ldw8oalr4" path="res://scripts/player.gd" id="1_1kok8"]
+[ext_resource type="Script" uid="uid://dfoblpsa1215k" path="res://scripts/character_sheet/character_sheet.gd" id="2_wnyoj"]
+[ext_resource type="Resource" uid="uid://75xe5isavtju" path="res://resource/skill/lightning.tres" id="3_r0ii2"]
+[ext_resource type="Resource" uid="uid://dm02dqyd5x646" path="res://resource/skill/spin_to_wheel.tres" id="4_fc6pn"]
+[ext_resource type="Texture2D" uid="uid://bxsbc7vc6xsxi" path="res://art/characters/skeddles/skeddles.png" id="5_uold0"]
+[ext_resource type="Texture2D" uid="uid://dxllgjcrdt3e6" path="res://art/characters/skeddles/smiley.png" id="6_ba0o3"]
+[ext_resource type="Script" uid="uid://bhwfphr11mqkm" path="res://scripts/skill/skill_resource.gd" id="6_fjrip"]
+
+[sub_resource type="Resource" id="Resource_q475s"]
+resource_local_to_scene = true
+script = ExtResource("2_wnyoj")
+name = "Skeddles"
+sprite_sheet = ExtResource("5_uold0")
+max_hp = 10
+max_mana = 0
+dmg = 1
+def = 0
+magic = 0
+skills = Dictionary[ExtResource("6_fjrip"), int]({
+ExtResource("3_r0ii2"): 0,
+ExtResource("4_fc6pn"): 1
+})
+
+[sub_resource type="Resource" id="Resource_aurts"]
+resource_local_to_scene = true
+script = ExtResource("2_wnyoj")
+name = "Smiley"
+sprite_sheet = ExtResource("6_ba0o3")
+max_hp = 3
+max_mana = 0
+dmg = 1
+def = 0
+magic = 0
+skills = Dictionary[ExtResource("6_fjrip"), int]({})
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_1kok8")
+party = Array[ExtResource("2_wnyoj")]([SubResource("Resource_q475s"), SubResource("Resource_aurts")])
 
 [node name="Camera2D" type="Camera2D" parent="."]

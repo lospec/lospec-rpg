@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://bfnbng2aru7tb"]
+
+[ext_resource type="Script" uid="uid://bhwfphr11mqkm" path="res://scripts/skill/skill_resource.gd" id="1_i437l"]
+
+[resource]
+script = ExtResource("1_i437l")
+name = "Cleanse"
+atk_type = 1
+mana_cost = 3
+cooldown = 3
+target_group = 2
+target_type = 2
+targetable_self = true
+description = "Cleanse all allies' debuffs or enemies' buffs"

@@ -1,0 +1,127 @@
+[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://bvgjfsc3v1qn4"]
+
+[ext_resource type="Texture2D" uid="uid://vg0a7xfxcfx1" path="res://art/vfx/lightning.png" id="1_poyjj"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_1edft"]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_5kx5u"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_f2l4w"]
+parameter_name = "Texture2DParameter"
+texture_type = 1
+texture_repeat = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_yi7hm"]
+expanded_output_ports = [0]
+source = 5
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_xtbne"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_rfkv7"]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_3mwe4"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(1, 0)]
+op_type = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_5vqrv"]
+parameter_name = "speed"
+
+[sub_resource type="VisualShaderNodeSmoothStep" id="VisualShaderNodeSmoothStep_fy3h8"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_egddm"]
+parameter_name = "vanishing_value"
+hint = 1
+
+[sub_resource type="VisualShader" id="VisualShader_e46t0"]
+code = "shader_type canvas_item;
+render_mode blend_add;
+
+uniform float vanishing_value : hint_range(0.0, 1.0);
+uniform vec2 speed;
+uniform sampler2D Texture2DParameter : source_color, repeat_enable;
+
+
+
+void fragment() {
+// Input:10
+	vec4 n_out10p0 = COLOR;
+
+
+// FloatParameter:9
+	float n_out9p0 = vanishing_value;
+
+
+// Input:5
+	float n_out5p0 = TIME;
+
+
+// Vector2Parameter:7
+	vec2 n_out7p0 = speed;
+
+
+// VectorOp:6
+	vec2 n_out6p0 = vec2(n_out5p0) * n_out7p0;
+
+
+// UVFunc:4
+	vec2 n_in4p1 = vec2(1.00000, 1.00000);
+	vec2 n_out4p0 = n_out6p0 * n_in4p1 + UV;
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(Texture2DParameter, n_out4p0);
+	float n_out3p1 = n_out3p0.r;
+
+
+// SmoothStep:8
+	float n_in8p1 = 1.00000;
+	float n_out8p0 = smoothstep(n_out9p0, n_in8p1, n_out3p1);
+
+
+// VectorOp:11
+	vec3 n_out11p0 = vec3(n_out10p0.xyz) * vec3(n_out8p0);
+
+
+// Output:0
+	COLOR.rgb = n_out11p0;
+
+
+}
+"
+mode = 1
+modes/blend = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1820, 220)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_f2l4w")
+nodes/fragment/2/position = Vector2(-20, 380)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_yi7hm")
+nodes/fragment/3/position = Vector2(420, 300)
+nodes/fragment/4/node = SubResource("VisualShaderNodeUVFunc_xtbne")
+nodes/fragment/4/position = Vector2(0, 80)
+nodes/fragment/5/node = SubResource("VisualShaderNodeInput_rfkv7")
+nodes/fragment/5/position = Vector2(-600, -40)
+nodes/fragment/6/node = SubResource("VisualShaderNodeVectorOp_3mwe4")
+nodes/fragment/6/position = Vector2(-259.777, 57.5236)
+nodes/fragment/7/node = SubResource("VisualShaderNodeVec2Parameter_5vqrv")
+nodes/fragment/7/position = Vector2(-580, 160)
+nodes/fragment/8/node = SubResource("VisualShaderNodeSmoothStep_fy3h8")
+nodes/fragment/8/position = Vector2(840, 260)
+nodes/fragment/9/node = SubResource("VisualShaderNodeFloatParameter_egddm")
+nodes/fragment/9/position = Vector2(400, 0)
+nodes/fragment/10/node = SubResource("VisualShaderNodeInput_1edft")
+nodes/fragment/10/position = Vector2(960, 80)
+nodes/fragment/11/node = SubResource("VisualShaderNodeVectorOp_5kx5u")
+nodes/fragment/11/position = Vector2(1380, 300)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 4, 0, 3, 0, 6, 0, 4, 2, 7, 0, 6, 1, 9, 0, 8, 0, 3, 1, 8, 2, 8, 0, 11, 1, 11, 0, 0, 0, 10, 0, 11, 0, 5, 0, 6, 0)
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource("VisualShader_e46t0")
+shader_parameter/vanishing_value = 0.0
+shader_parameter/speed = Vector2(-3, 0)
+shader_parameter/Texture2DParameter = ExtResource("1_poyjj")

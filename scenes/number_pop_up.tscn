@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://efy7vkhctr8g"]
+
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="1_20j5s"]
+
+[node name="NumberPopUp" type="Label"]
+z_index = 2
+offset_right = 1.0
+offset_bottom = 6.0
+pivot_offset = Vector2(0, 3)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_20j5s")
+theme_override_font_sizes/font_size = 6
+text = "0000"
+horizontal_alignment = 1
+autowrap_mode = 2

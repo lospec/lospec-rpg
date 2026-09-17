@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://dm02dqyd5x646"]
+
+[ext_resource type="Script" uid="uid://bhwfphr11mqkm" path="res://scripts/skill/skill_resource.gd" id="1_i7piq"]
+
+[resource]
+script = ExtResource("1_i7piq")
+name = "Spin to Wheel"
+atk_type = 2
+mana_cost = 5
+cooldown = 3
+target_group = 2
+target_type = 1
+targetable_self = true
+description = "Cast lightning from the sky that randomly strikes foes."

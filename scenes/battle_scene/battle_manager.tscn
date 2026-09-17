@@ -1,0 +1,493 @@
+[gd_scene load_steps=31 format=3 uid="uid://docc6xin1bqou"]
+
+[ext_resource type="Script" uid="uid://l181xdp5oco0" path="res://scripts/battle_system/battle_manager.gd" id="1_626np"]
+[ext_resource type="Texture2D" uid="uid://db0nefci05mgl" path="res://art/image (1).png" id="2_4xsu6"]
+[ext_resource type="Texture2D" uid="uid://bg3tbvya8betf" path="res://art/shapes/Square_8x8.png" id="3_mexw0"]
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="3_ur4j6"]
+[ext_resource type="PackedScene" uid="uid://buyo37ygjpooh" path="res://scenes/vfx/lightning_vfx.tscn" id="4_lu267"]
+[ext_resource type="Texture2D" uid="uid://vg0a7xfxcfx1" path="res://art/vfx/lightning.png" id="5_8hdcb"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_1edft"]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_5kx5u"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_f2l4w"]
+parameter_name = "Texture2DParameter"
+texture_type = 1
+texture_repeat = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_yi7hm"]
+expanded_output_ports = [0]
+source = 5
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_xtbne"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_rfkv7"]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_3mwe4"]
+default_input_values = [0, Vector2(0, 0), 1, Vector2(1, 0)]
+op_type = 0
+operator = 2
+
+[sub_resource type="VisualShaderNodeVec2Parameter" id="VisualShaderNodeVec2Parameter_5vqrv"]
+parameter_name = "speed"
+
+[sub_resource type="VisualShaderNodeSmoothStep" id="VisualShaderNodeSmoothStep_fy3h8"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_egddm"]
+parameter_name = "vanishing_value"
+hint = 1
+
+[sub_resource type="VisualShader" id="VisualShader_e46t0"]
+code = "shader_type canvas_item;
+render_mode blend_add;
+
+uniform float vanishing_value : hint_range(0.0, 1.0);
+uniform vec2 speed;
+uniform sampler2D Texture2DParameter : source_color, repeat_enable;
+
+
+
+void fragment() {
+// Input:10
+	vec4 n_out10p0 = COLOR;
+
+
+// FloatParameter:9
+	float n_out9p0 = vanishing_value;
+
+
+// Input:5
+	float n_out5p0 = TIME;
+
+
+// Vector2Parameter:7
+	vec2 n_out7p0 = speed;
+
+
+// VectorOp:6
+	vec2 n_out6p0 = vec2(n_out5p0) * n_out7p0;
+
+
+// UVFunc:4
+	vec2 n_in4p1 = vec2(1.00000, 1.00000);
+	vec2 n_out4p0 = n_out6p0 * n_in4p1 + UV;
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(Texture2DParameter, n_out4p0);
+	float n_out3p1 = n_out3p0.r;
+
+
+// SmoothStep:8
+	float n_in8p1 = 1.00000;
+	float n_out8p0 = smoothstep(n_out9p0, n_in8p1, n_out3p1);
+
+
+// VectorOp:11
+	vec3 n_out11p0 = vec3(n_out10p0.xyz) * vec3(n_out8p0);
+
+
+// Output:0
+	COLOR.rgb = n_out11p0;
+
+
+}
+"
+mode = 1
+modes/blend = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1820, 220)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_f2l4w")
+nodes/fragment/2/position = Vector2(-20, 380)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_yi7hm")
+nodes/fragment/3/position = Vector2(420, 300)
+nodes/fragment/4/node = SubResource("VisualShaderNodeUVFunc_xtbne")
+nodes/fragment/4/position = Vector2(0, 80)
+nodes/fragment/5/node = SubResource("VisualShaderNodeInput_rfkv7")
+nodes/fragment/5/position = Vector2(-600, -40)
+nodes/fragment/6/node = SubResource("VisualShaderNodeVectorOp_3mwe4")
+nodes/fragment/6/position = Vector2(-259.777, 57.5236)
+nodes/fragment/7/node = SubResource("VisualShaderNodeVec2Parameter_5vqrv")
+nodes/fragment/7/position = Vector2(-580, 160)
+nodes/fragment/8/node = SubResource("VisualShaderNodeSmoothStep_fy3h8")
+nodes/fragment/8/position = Vector2(840, 260)
+nodes/fragment/9/node = SubResource("VisualShaderNodeFloatParameter_egddm")
+nodes/fragment/9/position = Vector2(400, 0)
+nodes/fragment/10/node = SubResource("VisualShaderNodeInput_1edft")
+nodes/fragment/10/position = Vector2(960, 80)
+nodes/fragment/11/node = SubResource("VisualShaderNodeVectorOp_5kx5u")
+nodes/fragment/11/position = Vector2(1380, 300)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 4, 0, 3, 0, 6, 0, 4, 2, 7, 0, 6, 1, 9, 0, 8, 0, 3, 1, 8, 2, 8, 0, 11, 1, 11, 0, 0, 0, 10, 0, 11, 0, 5, 0, 6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vvgva"]
+resource_local_to_scene = true
+shader = SubResource("VisualShader_e46t0")
+shader_parameter/vanishing_value = 0.0
+shader_parameter/speed = Vector2(-3, 0)
+shader_parameter/Texture2DParameter = ExtResource("5_8hdcb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xg6sh"]
+bg_color = Color(0.270588, 0.266667, 0.313726, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dsukw"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_of3p7"]
+bg_color = Color(0.270588, 0.266667, 0.313726, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mnp2"]
+bg_color = Color(0.74902, 0.74902, 0.72549, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_if5kg"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pt8cl"]
+content_margin_left = 1.0
+content_margin_right = 1.0
+bg_color = Color(0.494118, 0.501961, 0.392157, 1)
+
+[sub_resource type="Theme" id="Theme_6fqoa"]
+default_font = ExtResource("3_ur4j6")
+default_font_size = 6
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.133333, 0.129412, 0.180392, 1)
+Button/colors/font_focus_color = Color(0.133333, 0.129412, 0.180392, 1)
+Button/colors/font_hover_color = Color(0.133333, 0.129412, 0.180392, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_xg6sh")
+Button/styles/focus = SubResource("StyleBoxFlat_dsukw")
+Button/styles/hover = SubResource("StyleBoxFlat_dsukw")
+Button/styles/normal = SubResource("StyleBoxFlat_of3p7")
+Button/styles/pressed = SubResource("StyleBoxFlat_of3p7")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_8mnp2")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_if5kg")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_if5kg")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_pt8cl")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_pt8cl")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bi14n"]
+bg_color = Color(0.133333, 0.129412, 0.180392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxss1"]
+bg_color = Color(0.270588, 0.266667, 0.313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msqxd"]
+bg_color = Color(0.133333, 0.129412, 0.180392, 1)
+corner_detail = 1
+
+[sub_resource type="Theme" id="Theme_na5e4"]
+Button/styles/normal = SubResource("StyleBoxFlat_msqxd")
+
+[sub_resource type="GDScript" id="GDScript_oytr6"]
+script/source = "extends Timer
+
+func _on_timeout() -> void:
+	%Next.visible = !%Next.visible
+"
+
+[node name="BattleScene" type="CanvasLayer"]
+process_mode = 3
+layer = 2
+script = ExtResource("1_626np")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.12549, 0.12549, 0.12549, 1)
+
+[node name="Environment" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -55.0
+offset_right = 120.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="EnvironmentContainer" type="Node2D" parent="Environment"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(120, 40)
+
+[node name="Background" type="Sprite2D" parent="Environment/EnvironmentContainer"]
+unique_name_in_owner = true
+texture = ExtResource("2_4xsu6")
+hframes = 3
+vframes = 3
+
+[node name="AllyContainer" type="Marker2D" parent="Environment/EnvironmentContainer"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(-60, 25)
+
+[node name="EnemyContainer" type="Marker2D" parent="Environment/EnvironmentContainer"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(60, 25)
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment"]
+visible = false
+position = Vector2(120, 40)
+scale = Vector2(30, 10)
+texture = ExtResource("3_mexw0")
+
+[node name="Lightning" parent="Environment" instance=ExtResource("4_lu267")]
+position = Vector2(111, -95)
+
+[node name="Lightning" parent="Environment/Lightning" index="1"]
+material = SubResource("ShaderMaterial_vvgva")
+points = PackedVector2Array(0, -101, 0, 0)
+
+[node name="UI" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = SubResource("Theme_6fqoa")
+
+[node name="PlayerPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -39.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bi14n")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PlayerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="Actions" type="HBoxContainer" parent="UI/PlayerPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MainAction" type="Control" parent="UI/PlayerPanel/MarginContainer/Actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ActionContainer" type="VBoxContainer" parent="UI/PlayerPanel/MarginContainer/Actions/MainAction"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="AttackButton" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Attack"
+
+[node name="SkillButton" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 0
+disabled = true
+text = "Skill"
+
+[node name="ItemButton" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 0
+text = "Item"
+
+[node name="RunButton" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/align_to_largest_stylebox = 0
+theme_override_font_sizes/font_size = 0
+text = "Run"
+
+[node name="Menu" type="Control" parent="UI/PlayerPanel/MarginContainer/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="Panel" parent="UI/PlayerPanel/MarginContainer/Actions/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_oxss1")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PlayerPanel/MarginContainer/Actions/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="AttackMenu" type="Control" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SkillMenu" type="ScrollContainer" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_na5e4")
+follow_focus = true
+
+[node name="SkillContainer" type="VBoxContainer" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer/SkillMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Button" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer/SkillMenu/SkillContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="Button2" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer/SkillMenu/SkillContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="Button3" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer/SkillMenu/SkillContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="Button4" type="Button" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer/SkillMenu/SkillContainer"]
+layout_mode = 2
+text = "asd"
+
+[node name="ItemMenu" type="ScrollContainer" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+follow_focus = true
+
+[node name="ItemContainer" type="VBoxContainer" parent="UI/PlayerPanel/MarginContainer/Actions/Menu/MarginContainer/ItemMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 2
+
+[node name="ActionInfo" type="Control" parent="UI/PlayerPanel/MarginContainer/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InfoPanel" type="Panel" parent="UI/PlayerPanel/MarginContainer/Actions/ActionInfo"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_oxss1")
+
+[node name="DisplayText" type="Control" parent="UI/PlayerPanel/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="UI/PlayerPanel/MarginContainer/DisplayText"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_separation = 1
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "This is the Display Text UI"
+scroll_active = false
+scroll_following = true
+
+[node name="Next" type="Label" parent="UI/PlayerPanel/MarginContainer/DisplayText"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -7.0
+offset_right = 4.0
+offset_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_ur4j6")
+theme_override_font_sizes/font_size = 8
+text = ">"
+
+[node name="BlinkNext" type="Timer" parent="UI/PlayerPanel/MarginContainer/DisplayText/Next"]
+unique_name_in_owner = true
+wait_time = 0.8
+script = SubResource("GDScript_oytr6")
+
+[connection signal="focus_entered" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/AttackButton" to="." method="show_action_menu" binds= [1]]
+[connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/AttackButton" to="." method="_on_attack_pressed" flags=3]
+[connection signal="focus_entered" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/SkillButton" to="." method="show_action_menu" binds= [2]]
+[connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/SkillButton" to="." method="_on_skill_button_pressed"]
+[connection signal="focus_entered" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/ItemButton" to="." method="show_action_menu" binds= [3]]
+[connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/ItemButton" to="." method="_on_item_button_pressed"]
+[connection signal="focus_entered" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/RunButton" to="." method="show_action_menu" binds= [0]]
+[connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/RunButton" to="." method="_on_run_pressed"]
+[connection signal="timeout" from="UI/PlayerPanel/MarginContainer/DisplayText/Next/BlinkNext" to="UI/PlayerPanel/MarginContainer/DisplayText/Next/BlinkNext" method="_on_timeout"]
+
+[editable path="Environment/Lightning"]

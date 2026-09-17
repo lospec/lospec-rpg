@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillResource" load_steps=2 format=3 uid="uid://chlgwksrx3vhc"]
+
+[ext_resource type="Script" uid="uid://bhwfphr11mqkm" path="res://scripts/skill/skill_resource.gd" id="1_ds8o0"]
+
+[resource]
+script = ExtResource("1_ds8o0")
+name = "Rage"
+atk_type = 0
+mana_cost = 0
+cooldown = 0
+target_group = 3
+target_type = 0
+targetable_self = true
+description = ""
