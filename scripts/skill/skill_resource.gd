@@ -17,6 +17,9 @@ class_name SkillResource extends Resource
 func initialize(battle_manager : BattleManager, initiator : Unit, targets : Array[Unit], is_auto : bool) -> void:
 	if targets.is_empty() || targets[0] == null:
 		return
+	if packed_scene == null:
+		push_warning("Skill '%s' has no packed_scene assigned" % name)
+		return
 	battle_manager.hide_actions()
 	
 	var skill : SkillScene = packed_scene.instantiate()
