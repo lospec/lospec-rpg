@@ -26,6 +26,7 @@ theme_override_fonts/normal_font = ExtResource("2_font")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
 text = "This is the Display Text UI"
+visible_characters_behavior = 1
 scroll_active = false
 scroll_following = true
 

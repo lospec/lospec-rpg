@@ -4,7 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://c0tx6b7yqhp4n" path="res://scenes/ui/text_box.tscn" id="2_txbox"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.133333, 0.129412, 0.180392, 1)
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_detail = 1
 
 [node name="DialogueBox" type="CanvasLayer"]
 layer = 2
@@ -26,7 +32,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -39.0
+offset_left = 4.0
+offset_top = -43.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
@@ -40,9 +49,9 @@ offset_top = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_bottom = 5
 
 [node name="TextBox" parent="UI/Panel/MarginContainer" instance=ExtResource("2_txbox")]
 unique_name_in_owner = true
