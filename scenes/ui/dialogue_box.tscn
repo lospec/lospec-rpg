@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dqk8w0v2m6yfp"]
+
+[ext_resource type="Script" path="res://scripts/ui/dialogue_box.gd" id="1_dlgbx"]
+[ext_resource type="PackedScene" uid="uid://c0tx6b7yqhp4n" path="res://scenes/ui/text_box.tscn" id="2_txbox"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.133333, 0.129412, 0.180392, 1)
+
+[node name="DialogueBox" type="CanvasLayer"]
+layer = 2
+visible = false
+script = ExtResource("1_dlgbx")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -39.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="TextBox" parent="UI/Panel/MarginContainer" instance=ExtResource("2_txbox")]
+unique_name_in_owner = true
+layout_mode = 2

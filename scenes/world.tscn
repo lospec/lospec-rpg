@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://b364qqtpututw"]
+[gd_scene load_steps=25 format=4 uid="uid://b364qqtpututw"]
 
 [ext_resource type="PackedScene" uid="uid://dik8pqs6immb7" path="res://scenes/player.tscn" id="1_qpucf"]
 [ext_resource type="Texture2D" uid="uid://djqeqcpfbjjxi" path="res://art/tileset.png" id="1_qwsel"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" uid="uid://l1jjykc1h18g" path="res://scripts/battle_system/ai/ActionPriority.gd" id="10_ocnws"]
 [ext_resource type="Resource" uid="uid://dkf51paik6ls2" path="res://resource/character_sheet/skeddles.tres" id="12_c3lmx"]
 [ext_resource type="Script" uid="uid://dumuatg57a5xv" path="res://scripts/cutscene.gd" id="14_pld4k"]
+[ext_resource type="PackedScene" uid="uid://bnpc3k7w2xqd4" path="res://scenes/npc.tscn" id="15_npc"]
+[ext_resource type="Texture2D" uid="uid://itvudael3t5c" path="res://art/characters/skeddles/gg.png" id="16_gg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_54e3y"]
 texture = ExtResource("1_qwsel")
@@ -105,10 +107,24 @@ tile_map_data = PackedByteArray("AAAGAAQAAAAAAAAAAAAFAAQAAAABAAAAAAAEAAQAAAAAAAA
 tile_set = SubResource("TileSet_4a5xq")
 y_sort_origin = -16
 
-[node name="Character2" parent="." instance=ExtResource("2_6dtdq")]
+[node name="Smiley" parent="." instance=ExtResource("2_6dtdq")]
 position = Vector2(113, -15)
 collision_layer = 4
 collision_mask = 1
+character_name = "smiley"
+
+[node name="NPC" parent="Smiley" instance=ExtResource("15_npc")]
+dialogue = Array[String](["I'm a happy dappy dude!"])
+
+[node name="GG" parent="." instance=ExtResource("2_6dtdq")]
+position = Vector2(170, 104)
+collision_layer = 4
+collision_mask = 1
+character_name = "gg"
+sprite_sheet = ExtResource("16_gg")
+
+[node name="NPC" parent="GG" instance=ExtResource("15_npc")]
+dialogue = Array[String](["Some people call me Arthur, but that's not my name."])
 
 [node name="Player" parent="." instance=ExtResource("2_6dtdq")]
 position = Vector2(130, 104)

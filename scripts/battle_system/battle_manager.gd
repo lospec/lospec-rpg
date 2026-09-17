@@ -1,7 +1,6 @@
 class_name BattleManager extends CanvasLayer
 
 signal end_turn
-signal end_display_text
 signal end_selection(index : int)
 signal hide_selection
 signal selection_index_changed(index : int)
@@ -11,8 +10,6 @@ enum UIMenuState {NONE, ATTACK, SKILL, ITEM}
 const UNIT = preload("res://scenes/battle_scene/unit.tscn")
 const UNIT_SPACING = 30
 const NUMBER_POP_UP = preload("res://scenes/number_pop_up.tscn")
-const TEXT_SPEED : float = 30
-const TEXT_SPEED_UP_MULT : float = 2
 
 
 var ally_units : Array[Unit] = []
@@ -31,9 +28,6 @@ var is_unit_selecting : bool:
 			prev_focused.release_focus()
 		else:
 			if prev_focused != null: prev_focused.grab_focus()
-
-var typed_text : float
-var text_length : int
 
 var get_reward : bool
 
@@ -94,23 +88,6 @@ func _ready() -> void:
 	for i : int in range(start_index, 0, -1):
 		act_btn[i].focus_neighbor_top = act_btn[i - 1].get_path()
 
-
-func _process(delta : float) -> void:
-	if typed_text < text_length:
-		if Input.is_action_just_pressed("SpeedUpDialogue"):
-			typed_text += delta * TEXT_SPEED * TEXT_SPEED_UP_MULT
-		else:
-			typed_text += delta * TEXT_SPEED
-		if Input.is_action_just_pressed("SkipDialogue"):
-			typed_text = text_length
-		%Text.visible_characters = typed_text
-		
-		if typed_text >= text_length:
-			%BlinkNext.start()
-		
-	else:
-		if Input.is_action_just_pressed("SpeedUpDialogue") || Input.is_action_just_pressed("SkipDialogue"):
-			end_display_text.emit()
 
 #Battle Logic
 func fight(enemies : Array[CharacterAP], allies : Array[CharacterSheet] = Globals.player_party) -> void:
@@ -454,21 +431,7 @@ func item_initialize(item : Item) -> void:
 
 func display_text(texts : Array[String]) -> void:
 	%Actions.hide()
-	%DisplayText.show()
-	
-	set_process(true)
-	for t : String in texts:
-		%Next.hide()
-		%BlinkNext.stop()
-		%Text.visible_ratio = 0
-		%Text.text = t
-		typed_text = 0
-		text_length = t.length()
-		await end_display_text
-	
-	set_process(false)
-	await get_tree().create_timer(0.1).timeout
-	%DisplayText.hide()
+	await %DisplayText.display_text(texts)
 
 
 func create_num_popup(value : int, num_pos : Vector2, color : Color = Color.WHITE) -> void:

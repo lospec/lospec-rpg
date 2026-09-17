@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0tx6b7yqhp4n"]
+
+[ext_resource type="Script" path="res://scripts/ui/text_box.gd" id="1_txbox"]
+[ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="2_font"]
+
+[node name="TextBox" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_txbox")
+
+[node name="Text" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_separation = 1
+theme_override_fonts/normal_font = ExtResource("2_font")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "This is the Display Text UI"
+scroll_active = false
+scroll_following = true
+
+[node name="Next" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -7.0
+offset_right = 4.0
+offset_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 8
+text = ">"
+
+[node name="BlinkNext" type="Timer" parent="Next"]
+unique_name_in_owner = true
+wait_time = 0.8
+
+[connection signal="timeout" from="Next/BlinkNext" to="." method="_on_blink_next_timeout"]

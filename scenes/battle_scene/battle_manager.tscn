@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://c56rtacbksa5q" path="res://art/04B_11__.TTF" id="3_ur4j6"]
 [ext_resource type="PackedScene" uid="uid://buyo37ygjpooh" path="res://scenes/vfx/lightning_vfx.tscn" id="4_lu267"]
 [ext_resource type="Texture2D" uid="uid://vg0a7xfxcfx1" path="res://art/vfx/lightning.png" id="5_8hdcb"]
+[ext_resource type="PackedScene" uid="uid://c0tx6b7yqhp4n" path="res://scenes/ui/text_box.tscn" id="7_txbox"]
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_1edft"]
 input_name = "color"
@@ -186,13 +187,6 @@ corner_detail = 1
 
 [sub_resource type="Theme" id="Theme_na5e4"]
 Button/styles/normal = SubResource("StyleBoxFlat_msqxd")
-
-[sub_resource type="GDScript" id="GDScript_oytr6"]
-script/source = "extends Timer
-
-func _on_timeout() -> void:
-	%Next.visible = !%Next.visible
-"
 
 [node name="BattleScene" type="CanvasLayer"]
 process_mode = 3
@@ -436,49 +430,10 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_oxss1")
 
-[node name="DisplayText" type="Control" parent="UI/PlayerPanel/MarginContainer"]
+[node name="DisplayText" parent="UI/PlayerPanel/MarginContainer" instance=ExtResource("7_txbox")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-
-[node name="Text" type="RichTextLabel" parent="UI/PlayerPanel/MarginContainer/DisplayText"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/line_separation = 1
-theme_override_font_sizes/normal_font_size = 8
-bbcode_enabled = true
-text = "This is the Display Text UI"
-scroll_active = false
-scroll_following = true
-
-[node name="Next" type="Label" parent="UI/PlayerPanel/MarginContainer/DisplayText"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1.0
-offset_top = -7.0
-offset_right = 4.0
-offset_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("3_ur4j6")
-theme_override_font_sizes/font_size = 8
-text = ">"
-
-[node name="BlinkNext" type="Timer" parent="UI/PlayerPanel/MarginContainer/DisplayText/Next"]
-unique_name_in_owner = true
-wait_time = 0.8
-script = SubResource("GDScript_oytr6")
 
 [connection signal="focus_entered" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/AttackButton" to="." method="show_action_menu" binds= [1]]
 [connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/AttackButton" to="." method="_on_attack_pressed" flags=3]
@@ -488,6 +443,5 @@ script = SubResource("GDScript_oytr6")
 [connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/ItemButton" to="." method="_on_item_button_pressed"]
 [connection signal="focus_entered" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/RunButton" to="." method="show_action_menu" binds= [0]]
 [connection signal="pressed" from="UI/PlayerPanel/MarginContainer/Actions/MainAction/ActionContainer/RunButton" to="." method="_on_run_pressed"]
-[connection signal="timeout" from="UI/PlayerPanel/MarginContainer/DisplayText/Next/BlinkNext" to="UI/PlayerPanel/MarginContainer/DisplayText/Next/BlinkNext" method="_on_timeout"]
 
 [editable path="Environment/Lightning"]

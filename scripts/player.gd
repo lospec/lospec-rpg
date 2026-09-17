@@ -8,6 +8,8 @@ func _ready() -> void:
 	character.state = Character.State.MOVE
 	Globals.battle.connect(stop)
 	Globals.game_world.connect(start)
+	Globals.dialogue_started.connect(stop)
+	Globals.dialogue_ended.connect(start)
 	
 	#TODO Remove this and to be replaced in start game or load save
 	Globals.player_party.clear()
