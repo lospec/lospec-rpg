@@ -7,6 +7,8 @@ You may contribute whatever features you wish.
 ## Current Features
 
 - walking around an empty map as skeddles
+- talking to NPCs
+- basic turn based party battle system
 
 # Development
 
