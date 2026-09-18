@@ -10,7 +10,7 @@ You may contribute whatever features you wish.
 
 # Development
 
-Uses Godot 4.3, but probably safe to keep updated to the lastest stable version.
+Uses Godot 4.7, but probably safe to keep updated to the lastest stable version.
 
 ## Setup
 
